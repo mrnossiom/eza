@@ -2,6 +2,7 @@ pub mod xattr;
 
 #[cfg(feature = "git")]
 pub mod git;
+pub mod mercurial;
 
 #[cfg(not(feature = "git"))]
 pub mod git {

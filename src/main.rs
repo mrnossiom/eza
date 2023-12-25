@@ -36,6 +36,7 @@ use crate::options::stdin::FilesInput;
 use crate::options::{vars, Options, OptionsResult, Vars};
 use crate::output::{details, escape, file_name, grid, grid_details, lines, Mode, View};
 use crate::theme::Theme;
+use eza::fs::feature::mercurial::MercurialCache;
 use log::*;
 
 mod fs;
@@ -87,6 +88,7 @@ fn main() {
             }
 
             let git = git_options(&options, &input_paths);
+            let mercurial = mercurial_options(&options, &input_paths);
             let writer = io::stdout();
             let git_repos = git_repos(&options, &input_paths);
 
@@ -189,6 +191,10 @@ fn git_options(options: &Options, args: &[&OsStr]) -> Option<GitCache> {
     } else {
         None
     }
+}
+
+fn mercurial_options(_options: &Options, args: &[&OsStr]) -> Option<MercurialCache> {
+    Some(args.iter().map(PathBuf::from).collect())
 }
 
 #[cfg(not(feature = "git"))]
